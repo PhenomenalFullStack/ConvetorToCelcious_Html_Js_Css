@@ -1,0 +1,23 @@
+#lbCount{
+    display: block;
+    text-align: center;
+    font-size: 50px;
+}
+
+#BtnDecrease{
+    display: inline;
+    -ms-grid-column-align: center;
+    font-size: 15px;
+}
+
+#BtnReset{
+    display: inline;
+    -ms-grid-column-align: center;
+    font-size: 15px;
+}
+
+#BtnIncrease{
+    display: inline;
+    -ms-grid-column-align: center;
+    font-size: 15px;
+}
