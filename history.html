@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Conversion History</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="darkModeContainer">
+        <label class="switch" aria-label="Toggle dark mode">
+            <input type="checkbox" id="darkModeToggle" />
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="container" role="main">
+        <h1>Conversion History</h1>
+        
+
+<div id="historyList" class="history-list"></div>
+
+        <nav class="nav-links">
+            <a href="index.html">Back to Converter</a> |
+            <a href="chart.html">Chart Visualization</a> |
+            <a href="formula.html">Formula & Explanation</a>
+        </nav>
+    </div>
+
+<script>
+
+    // Unit names for display
+  const unitNames = {
+    C: '°C',
+    F: '°F',
+    K: 'K',
+    R: '°R',
+    Re: '°Ré',
+  };
+
+
+  function formatUnit(unitKey) {
+    return unitNames[unitKey?.toLowerCase()] || unitKey?.toUpperCase() || "?";
+  }
+
+  function loadHistory() {
+    const listContainer = document.getElementById("historyList");
+    listContainer.innerHTML = "";
+    const history = JSON.parse(localStorage.getItem("tempHistory")) || [];
+
+    if (history.length === 0) {
+      listContainer.innerHTML = "<p>No history yet.</p>";
+      return;
+    }
+
+    history.reverse().forEach((entry) => {
+      const div = document.createElement("div");
+      div.className = "history-entry";
+
+      const text = `${entry.inputVal} ${formatUnit(entry.inputUnit)} → ${entry.outputVal} ${formatUnit(entry.outputUnit)}`;
+                   `${entry.inputVal} ${unitNames[entry.inputUnit]} → ${entry.outputVal} ${unitNames[entry.outputUnit]}`;
+      const textSpan = document.createElement("span");
+      textSpan.className = "entry-text";
+      textSpan.textContent = text;
+
+      const copyBtn = document.createElement("button");
+      copyBtn.className = "copy-button";
+      copyBtn.textContent = "Copy";
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(text);
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => (copyBtn.textContent = "Copy"), 2000);
+      };
+
+      div.appendChild(textSpan);
+      div.appendChild(copyBtn);
+      listContainer.appendChild(div);
+    });
+  }
+
+  function copyAllHistory() {
+    const history = JSON.parse(localStorage.getItem("tempHistory")) || [];
+    if (history.length === 0) return;
+
+    const allText = history
+      .map(
+        (entry) =>
+          `${entry.inputVal} ${formatUnit(entry.inputUnit)} → ${entry.outputVal} ${formatUnit(entry.outputUnit)}`
+      )
+      .reverse()
+      .join("\n");
+
+    navigator.clipboard.writeText(allText);
+    alert("All history copied to clipboard!");
+  }
+
+  function exportCSV() {
+    const history = JSON.parse(localStorage.getItem("tempHistory")) || [];
+    if (history.length === 0) return;
+
+    const rows = [["Input Value", "Input Unit", "Output Value", "Output Unit"]];
+    history.forEach((entry) => {
+      rows.push([
+        entry.inputVal,
+        formatUnit(entry.inputUnit),
+        entry.outputVal,
+        formatUnit(entry.outputUnit)
+      ]);
+    });
+
+    const csvContent = rows.map((row) => row.join(",")).join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "conversion_history.csv";
+    a.click();
+
+    URL.revokeObjectURL(url);
+  }
+
+  function clearHistory() {
+    if (confirm("Are you sure you want to clear all history?")) {
+      localStorage.removeItem("tempHistory");
+      loadHistory();
+    }
+  }
+
+  window.onload = function () {
+    // Add action buttons
+    const controls = document.createElement("div");
+    controls.style.display = "flex";
+    controls.style.flexWrap = "wrap";
+    controls.style.gap = "10px";
+    controls.style.marginBottom = "20px";
+
+    const copyAllBtn = document.createElement("button");
+    copyAllBtn.textContent = "Copy All";
+    copyAllBtn.className = "copy-button";
+    copyAllBtn.onclick = copyAllHistory;
+
+    const exportBtn = document.createElement("button");
+    exportBtn.textContent = "Export to CSV";
+    exportBtn.className = "copy-button";
+    exportBtn.onclick = exportCSV;
+
+    const clearBtn = document.createElement("button");
+    clearBtn.textContent = "Clear History";
+    clearBtn.className = "copy-button";
+    clearBtn.onclick = clearHistory;
+
+    controls.appendChild(copyAllBtn);
+    controls.appendChild(exportBtn);
+    controls.appendChild(clearBtn);
+
+    document.querySelector(".container").insertBefore(controls, document.getElementById("historyList"));
+
+    loadHistory();
+  };
+</script>
+<script src="script.js"></script>
+  
+</body>
+</html>

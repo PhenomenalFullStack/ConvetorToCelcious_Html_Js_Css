@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Temperature Charts</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Optional Dark Mode Toggle -->
+  <div id="darkModeContainer">
+    <label class="switch">
+      <input type="checkbox" id="darkModeToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="container">
+    <h1 id="">Temperature Conversion Charts</h1>
+
+    <div class="chart-box">
+      <h3>Celsius to Fahrenheit</h3>
+      <canvas id="cToFChart"></canvas>
+    </div>
+
+    <div class="chart-box">
+      <h3>Celsius to Kelvin</h3>
+      <canvas id="cToKChart"></canvas>
+    </div>
+
+    <div class="chart-box">
+      <h3>Fahrenheit to Kelvin</h3>
+      <canvas id="fToKChart"></canvas>
+    </div>
+
+    	<nav class="nav-links">
+            <a href="index.html">Back to Converter</a> |
+            <a href="history.html">Conversion History</a> |
+            <a href="formula.html">Formula & Explanation</a>
+    </nav>
+  </div>
+<script src="script.js"></script>
+  <!-- Chart.js (bundled locally if offline) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+
+
+    // Chart 1: Celsius to Fahrenheit
+    const celsius = Array.from({ length: 101 }, (_, i) => i - 50);
+    const fahrenheit = celsius.map(c => c * 9 / 5 + 32);
+    new Chart(document.getElementById('cToFChart'), {
+      type: 'line',
+      data: {
+        labels: celsius,
+        datasets: [{
+          label: '°F',
+          data: fahrenheit,
+          borderColor: '#007bff',
+          backgroundColor: 'rgba(0, 123, 255, 0.2)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        plugins: {
+          title: { display: true, text: '°C to °F' }
+        },
+        scales: {
+          x: { title: { display: true, text: 'Celsius (°C)' } },
+          y: { title: { display: true, text: 'Fahrenheit (°F)' } }
+        }
+      }
+    });
+
+    // Chart 2: Celsius to Kelvin
+    const kelvin = celsius.map(c => c + 273.15);
+    new Chart(document.getElementById('cToKChart'), {
+      type: 'line',
+      data: {
+        labels: celsius,
+        datasets: [{
+          label: 'K',
+          data: kelvin,
+          borderColor: '#28a745',
+          backgroundColor: 'rgba(40, 167, 69, 0.2)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        plugins: {
+          title: { display: true, text: '°C to K' }
+        },
+        scales: {
+          x: { title: { display: true, text: 'Celsius (°C)' } },
+          y: { title: { display: true, text: 'Kelvin (K)' } }
+        }
+      }
+    });
+
+    // Chart 3: Fahrenheit to Kelvin
+    const fTemps = Array.from({ length: 101 }, (_, i) => i);
+    const fToK = fTemps.map(f => (f - 32) * 5 / 9 + 273.15);
+    new Chart(document.getElementById('fToKChart'), {
+      type: 'line',
+      data: {
+        labels: fTemps,
+        datasets: [{
+          label: 'K',
+          data: fToK,
+          borderColor: '#ffc107',
+          backgroundColor: 'rgba(255, 193, 7, 0.2)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        plugins: {
+          title: { display: true, text: '°F to K' }
+        },
+        scales: {
+          x: { title: { display: true, text: 'Fahrenheit (°F)' } },
+          y: { title: { display: true, text: 'Kelvin (K)' } }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,111 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSite</title>
-
-    <!--Linking the CSS to the HTML-->
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Temperature Converter</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-    <!--First--
-    <p id="p1"></p>
-    <p id="p2"></p>
-    <p id="p3"></p>
+    <div id="darkModeContainer">
+        <label class="switch" aria-label="Toggle dark mode">
+            <input type="checkbox" id="darkModeToggle" />
+            <span class="slider"></span>
+        </label>
+    </div>
 
-    <label id="lbName">Enter your name:</label><br><br>
-    <input type="text" id="myText"><br><br>
-    <button type="Button" id="submit">Submit</button><br><br><br><br><br>
+    <div class="container" role="main">
+        <h1>Temperature Converter</h1>
 
+        <label for="inputTemp">Enter Temperature</label>
+        <input
+            type="text"
+            id="inputTemp"
+            aria-describedby="inputHelp"
+            placeholder="e.g. 100, 100F, 37C"
+            autocomplete="off"
+        />
+        <small id="inputHelp" class="sr-only">Input temperature with optional unit (C, F, K, R, Re)</small>
 
+        <div class="flex-row">
+            <div>
+                <label for="fromUnit">From:</label>
+                <select id="fromUnit" aria-label="Select input unit">
+                    <option value="C">Celsius (°C)</option>
+                    <option value="F">Fahrenheit (°F)</option>
+                    <option value="K">Kelvin (K)</option>
+                    <option value="R">Rankine (°R)</option>
+                    <option value="Re">Réaumur (°Ré)</option>
+                </select>
+            </div>
 
-    --Second--
-    <label id="lbSideA">Side A:</label><br>
-    <input type="number" id="sideA"><br><br>
+            <div>
+                <label for="toUnit">To:</label>
+                <select id="toUnit" aria-label="Select output unit">
+                    <option value="C">Celsius (°C)</option>
+                    <option value="F">Fahrenheit (°F)</option>
+                    <option value="K">Kelvin (K)</option>
+                    <option value="R">Rankine (°R)</option>
+                    <option value="Re">Réaumur (°Ré)</option>
+                </select>
+            </div>
+        </div>
 
-    <label id="lbSideB">Side B:</label><br>
-    <input type="number" id="sideB"><br><br>
+        <div class="buttons-row">
+            <button type="button" id="convertBtn">Convert</button>
+            <button type="button" id="clearBtn">Clear</button>
+        </div>
 
-    <button type="Button" id="BtnSubmit">Submit</button><br><br>
+        <label id="resultLabel" aria-live="polite" aria-atomic="true"></label>
 
-    <label id="lbSideC">Side C:</label><br>
-    <input type="number" id="sideC"><br><br>
+        <nav class="nav-links">
+            <a href="history.html">Conversion History</a> |
+            <a href="chart.html">Chart Visualization</a> |
+            <a href="formula.html">Formula & Explanation</a>
+        </nav>
+    </div>
 
-
-    
-    --Third--
-    <label id="lbCount">0</label>
-    <button type="button" id="BtnDecrease">Decrease</button>
-    <button type="button" id="BtnReset">Reset</button>
-    <button type="button" id="BtnIncrease">Increase</button>
-
-
-
-    --Fourth--
-    <label id="lbRollDie1"></label><br>
-    <label id="lbRollDie2"></label><br>
-    <label id="lbRollDie3"></label><br>
-
-    <button type="button" id="BtnRollThreeDies">Roll Three Dies</button>
-
-
-    --5--
-    <label for="checkbox">Subscribe</label>
-    <input type="checkbox" id="checkbox"><br>
-
-    <button type="Button" id="BtnSubscribe">Submit</button>
-
-
-
-    --6--
-    <label for="visaBtn">Visa</label>
-    <input type="radio" name="card" id="visaBtn">
-
-    <label for="masterBtn">Master</label>
-    <input type="radio" name="card" id="masterBtn">
-
-    <label for="paypalBtn">Paypal</label>
-    <input type="radio" name="card" id="paypalBtn"><br>
-
-    <button type="Button" id="BtnCardUse">Submit</button>
-   
-
-
-    --7--
-    <label id="rec">#</label>
-
-     
-    --8 Guessing Game--
-    <h1>Number Guessing Game</h1>
-    <p>Pick a # between 1 - 10</p>
-    <label>Enter a Guess</label>
-
-    <input id="guessField">
-    <input type="submit", id="submitB">
-   
-
-
-
-    --8 Temperature Conversion--
-     -->
-    <label>Enter a Temperature</label>
-    <input type="text" id="textBox"><br>
-
-    <label>Convert to:</label><br>
-
-    <input type="radio" id="cButton" name="unit">
-    <label>Celsius</label><br>
-
-    <input type="radio" id="fButton" name="unit">
-    <label>Fahrenheit:</label><br>
-
-    <button type="button", id="submitBu">Submit</button><br>
-    <label id="tempLabel"></label>
-
-    <!--linking the js-->
-    <script src="index.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
